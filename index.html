@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ben Kvale - Dashboard</title>
+
+    <style>
+
+        :root {
+
+            --xbox-green: #9bf00b;
+
+            --xbox-dark: #101010;
+
+            --xbox-grey: #e6e6e6;
+
+            --blade-inactive: #cfcfcf;
+
+            --blade-text: #444;
+
+            --glass: rgba(255, 255, 255, 0.15);
+
+        }
+
+
+
+        @font-face {
+
+            font-family: 'Segoe UI';
+
+            src: local('Segoe UI');
+
+        }
+
+
+
+        body {
+
+            margin: 0;
+
+            padding: 0;
+
+            background-color: #000;
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            color: #333;
+
+            overflow: hidden;
+
+            height: 100vh;
+
+            width: 100vw;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+
+
+        /* The TV Screen Container */
+
+        .crt-container {
+
+            width: 100%;
+
+            height: 100%;
+
+            max-width: 1400px;
+
+            max-height: 900px;
+
+            position: relative;
+
+            background: linear-gradient(135deg, #70c408 0%, #1e5799 0%, #2989d8 50%, #7db9e8 100%);
+
+            overflow: hidden;
+
+            box-shadow: 0 0 50px rgba(155, 240, 11, 0.2);
+
+        }
+
+
+
+        /* Abstract Background Swirls */
+
+        .bg-swirl {
+
+            position: absolute;
+
+            width: 200%;
+
+            height: 200%;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(255,255,255,0.1);
+
+            top: -50%;
+
+            left: -50%;
+
+            z-index: 0;
+
+        }
+
+        .bg-swirl:nth-child(2) { top: -40%; left: -60%; border-width: 4px; opacity: 0.5; }
+
+        .bg-swirl:nth-child(3) { top: -30%; left: -30%; border-width: 1px; opacity: 0.3; }
+
+
+
+        /* The Blade Navigation System */
+
+        .blade-system {
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            z-index: 10;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+
+        /* Content Area (Top 80%) */
+
+        .viewport {
+
+            flex: 1;
+
+            padding: 40px 60px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            opacity: 0;
+
+            transition: opacity 0.3s ease;
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 85%;
+
+            pointer-events: none; /* Default to none */
+
+            color: white;
+
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+        }
+
+
+
+        .viewport.active {
+
+            opacity: 1;
+
+            pointer-events: all;
+
+            z-index: 20;
+
+        }
+
+
+
+        /* The Blades (Bottom Navigation) */
+
+        .blades-container {
+
+            height: 15%;
+
+            min-height: 80px;
+
+            display: flex;
+
+            align-items: flex-end;
+
+            position: absolute;
+
+            bottom: 0;
+
+            width: 100%;
+
+            padding-left: 50px;
+
+            z-index: 30;
+
+        }
+
+
+
+        .blade {
+
+            width: 180px;
+
+            height: 60px;
+
+            background: var(--blade-inactive);
+
+            margin-right: -20px;
+
+            border-top-left-radius: 40px;
+
+            border-bottom-right-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+
+            position: relative;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            font-size: 1.1rem;
+
+            color: #666;
+
+            border: 2px solid rgba(255,255,255,0.5);
+
+            border-bottom: none;
+
+        }
+
+
+
+        .blade:hover {
+
+            height: 70px;
+
+            background: #e0e0e0;
+
+        }
+
+
+
+        .blade.active {
+
+            height: 90px; /* Expands up */
+
+            background: var(--xbox-green);
+
+            color: #fff;
+
+            z-index: 100;
+
+            margin-bottom: 0;
+
+            box-shadow: 0 0 20px rgba(155, 240, 11, 0.6);
+
+            border-color: #fff;
+
+            width: 220px;
+
+        }
+
+
+
+        /* ---- VIEWPORT 1: GAMERCARD (PROFILE) ---- */
+
+        .profile-card {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 40px;
+
+        }
+
+
+
+        .avatar-zone {
+
+            width: 200px;
+
+            height: 200px;
+
+            background: #333;
+
+            border: 4px solid #fff;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 4rem;
+
+            color: var(--xbox-green);
+
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+
+        }
+
+
+
+        .stats-zone h1 {
+
+            font-size: 3.5rem;
+
+            margin: 0;
+
+            text-transform: uppercase;
+
+            letter-spacing: -2px;
+
+        }
+
+
+
+        .stats-zone h2 {
+
+            font-size: 1.5rem;
+
+            font-weight: 400;
+
+            margin: 5px 0 20px 0;
+
+            opacity: 0.9;
+
+        }
+
+
+
+        .gamerscore {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            background: #fff;
+
+            color: #333;
+
+            padding: 5px 15px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            font-size: 1.2rem;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+
+        }
+
+
+
+        .g-icon {
+
+            background: var(--xbox-green);
+
+            color: white;
+
+            border-radius: 50%;
+
+            width: 24px;
+
+            height: 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-right: 8px;
+
+            font-size: 0.8rem;
+
+        }
+
+
+
+        .rep-stars {
+
+            color: var(--xbox-green);
+
+            font-size: 1.2rem;
+
+            margin-top: 10px;
+
+        }
+
+
+
+        .summary-text {
+
+            max-width: 600px;
+
+            margin-top: 20px;
+
+            font-size: 1.1rem;
+
+            line-height: 1.5;
+
+            background: rgba(0,0,0,0.3);
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            border-left: 4px solid var(--xbox-green);
+
+        }
+
+
+
+        /* ---- VIEWPORT 2: ACHIEVEMENTS (EXPERIENCE) ---- */
+
+        .achievement-list {
+
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 15px;
+
+            max-height: 80%;
+
+            overflow-y: auto;
+
+            padding-right: 20px;
+
+        }
+
+
+
+        .achievement-row {
+
+            background: rgba(255,255,255,0.9);
+
+            color: #333;
+
+            padding: 15px 20px;
+
+            border-radius: 4px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            transition: transform 0.2s;
+
+            text-shadow: none;
+
+        }
+
+
+
+        .achievement-row:hover {
+
+            transform: scale(1.02);
+
+            border-left: 10px solid var(--xbox-green);
+
+        }
+
+
+
+        .ach-icon {
+
+            width: 50px;
+
+            height: 50px;
+
+            background: #ddd;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 1.5rem;
+
+            flex-shrink: 0;
+
+        }
+
+
+
+        .ach-details {
+
+            flex: 1;
+
+        }
+
+
+
+        .ach-title {
+
+            font-weight: 800;
+
+            font-size: 1.1rem;
+
+            color: var(--xbox-dark);
+
+            text-transform: uppercase;
+
+        }
+
+
+
+        .ach-desc {
+
+            font-size: 0.9rem;
+
+            color: #555;
+
+        }
+
+
+
+        .ach-points {
+
+            font-weight: bold;
+
+            color: #888;
+
+            font-size: 0.9rem;
+
+        }
+
+
+
+        /* ---- VIEWPORT 3: SKILL TREE ---- */
+
+        .skill-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+
+        .skill-box {
+
+            background: rgba(0,0,0,0.4);
+
+            border: 2px solid rgba(255,255,255,0.3);
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+        }
+
+
+
+        .skill-box h3 {
+
+            margin-top: 0;
+
+            color: var(--xbox-green);
+
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+
+            padding-bottom: 10px;
+
+        }
+
+
+
+        .tag-cloud span {
+
+            display: inline-block;
+
+            background: rgba(255,255,255,0.2);
+
+            padding: 4px 10px;
+
+            margin: 4px;
+
+            border-radius: 4px;
+
+            font-size: 0.9rem;
+
+        }
+
+
+
+        /* ---- VIEWPORT 4: SYSTEM INFO (CONTACT) ---- */
+
+        .system-info {
+
+            background: rgba(255,255,255,0.95);
+
+            color: #222;
+
+            padding: 40px;
+
+            border-radius: 10px;
+
+            text-shadow: none;
+
+            max-width: 600px;
+
+            margin: 0 auto;
+
+        }
+
+
+
+        .info-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            border-bottom: 1px solid #ccc;
+
+            padding: 10px 0;
+
+        }
+
+
+
+        .info-label { font-weight: bold; color: #666; }
+
+        .info-value { font-weight: bold; color: var(--xbox-dark); }
+
+        .info-value a { color: #0077b5; text-decoration: none; }
+
+
+
+        /* Scrollbar styling */
+
+        ::-webkit-scrollbar { width: 8px; }
+
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+
+        ::-webkit-scrollbar-thumb { background: var(--xbox-green); border-radius: 4px; }
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <div class="crt-container">
+
+        <div class="bg-swirl"></div>
+
+        <div class="bg-swirl"></div>
+
+        <div class="bg-swirl"></div>
+
+
+
+        <div class="blade-system">
+
+            
+
+            <div id="view-home" class="viewport active">
+
+                <div class="profile-card">
+
+                    <div class="avatar-zone">
+
+                        BK
+
+                    </div>
+
+                    <div class="stats-zone">
+
+                        <h1>Ben Kvale</h1>
+
+                        <h2>B2B Demand Gen Strategist</h2>
+
+                        <div class="gamerscore">
+
+                            <div class="g-icon">G</div>
+
+                            7000 </div>
+
+                        <div class="rep-stars">★★★★★</div>
+
+                        <div class="summary-text">
+
+                            "I thrive in fast-paced environments where I can own the full funnel. I specialize in B2B demand generation, campaign strategy, and blending ABM with lifecycle marketing."
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div id="view-career" class="viewport">
+
+                <h2>Mission Log</h2>
+
+                <div class="achievement-list">
+
+                    <div class="achievement-row">
+
+                        <div class="ach-icon">🏆</div>
+
+                        <div class="ach-details">
+
+                            <div class="ach-title">Trace3: MarTech Lead</div>
+
+                            <div class="ach-desc">Integrated HubSpot with NetSuite ERP via API. Lead AI Center of Excellence strategy.</div>
+
+                            <div class="ach-points">2024 - Present</div>
+
+                        </div>
+
+                        <div class="ach-points">2000 G</div>
+
+                    </div>
+
+
+
+                    <div class="achievement-row">
+
+                        <div class="ach-icon">🔓</div>
+
+                        <div class="ach-details">
+
+                            <div class="ach-title">Tail Wind: Marketing Manager</div>
+
+                            <div class="ach-desc">Owned execution of all marketing channels. Managed Partner relationships (Snowflake, Databricks).</div>
+
+                            <div class="ach-points">2022 - 2024</div>
+
+                        </div>
+
+                        <div class="ach-points">1400 G</div>
+
+                    </div>
+
+
+
+                    <div class="achievement-row">
+
+                        <div class="ach-icon">🔓</div>
+
+                        <div class="ach-details">
+
+                            <div class="ach-title">Digi: Digital Specialist II</div>
+
+                            <div class="ach-desc">Created inbound demand-gen campaigns. Data-driven visual reporting on KPIs.</div>
+
+                            <div class="ach-points">2021 - 2023</div>
+
+                        </div>
+
+                        <div class="ach-points">1200 G</div>
+
+                    </div>
+
+
+
+                     <div class="achievement-row">
+
+                        <div class="ach-icon">🔓</div>
+
+                        <div class="ach-details">
+
+                            <div class="ach-title">Talencio: Marketing Specialist</div>
+
+                            <div class="ach-desc">Executed multi-channel marketing plans. Built company brand across functional areas.</div>
+
+                            <div class="ach-points">2019 - 2021</div>
+
+                        </div>
+
+                        <div class="ach-points">1000 G</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div id="view-skills" class="viewport">
+
+                <h2>Skill Tree</h2>
+
+                <div class="skill-grid">
+
+                    <div class="skill-box">
+
+                        <h3>Tech Stack</h3>
+
+                        <div class="tag-cloud">
+
+                            <span>HubSpot (Expert)</span>
+
+                            <span>NetSuite ERP</span>
+
+                            <span>ZoomInfo</span>
+
+                            <span>Crossbeam</span>
+
+                            <span>Power BI</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="skill-box">
+
+                        <h3>AI / Intelligence</h3>
+
+                        <div class="tag-cloud">
+
+                            <span>ChatGPT</span>
+
+                            <span>Claude</span>
+
+                            <span>Gemini</span>
+
+                            <span>Glean</span>
+
+                            <span>365 CoPilot</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="skill-box">
+
+                        <h3>Strategy</h3>
+
+                        <div class="tag-cloud">
+
+                            <span>B2B Demand Gen</span>
+
+                            <span>ABM</span>
+
+                            <span>RevOps</span>
+
+                            <span>Lead Scoring</span>
+
+                            <span>Pipeline Marketing</span>
+
+                        </div>
+
+                    </div>
+
+                     <div class="skill-box">
+
+                        <h3>Certifications</h3>
+
+                        <div class="tag-cloud">
+
+                            <span>HubSpot Inbound</span>
+
+                            <span>HubSpot RevOps</span>
+
+                            <span>AI Legends Foundations</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div id="view-system" class="viewport">
+
+                <div class="system-info">
+
+                    <h2 style="color:#333; margin-top:0;">System Settings</h2>
+
+                    
+
+                    <div class="info-row">
+
+                        <span class="info-label">Gamertag</span>
+
+                        <span class="info-value">Ben Kvale</span>
+
+                    </div>
+
+                    <div class="info-row">
+
+                        <span class="info-label">Location</span>
+
+                        <span class="info-value">Minneapolis, MN</span>
+
+                    </div>
+
+                    <div class="info-row">
+
+                        <span class="info-label">Email</span>
+
+                        <span class="info-value"><a href="mailto:benkvale@gmail.com">benkvale@gmail.com</a></span>
+
+                    </div>
+
+                    <div class="info-row">
+
+                        <span class="info-label">Phone</span>
+
+                        <span class="info-value">320.434.0445</span>
+
+                    </div>
+
+                    <div class="info-row">
+
+                        <span class="info-label">LinkedIn</span>
+
+                        <span class="info-value"><a href="https://linkedin.com/in/benkvale" target="_blank">/in/benkvale</a></span>
+
+                    </div>
+
+                    <div class="info-row">
+
+                        <span class="info-label">Character Class</span>
+
+                        <span class="info-value">INTP / Type 4</span>
+
+                    </div>
+
+                     <div class="info-row">
+
+                        <span class="info-label">Education</span>
+
+                        <span class="info-value">B.S. Marketing (North Central Univ)</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="blades-container">
+
+            <div class="blade active" onclick="switchBlade('home', this)">Profile</div>
+
+            <div class="blade" onclick="switchBlade('career', this)">Career</div>
+
+            <div class="blade" onclick="switchBlade('skills', this)">Skills</div>
+
+            <div class="blade" onclick="switchBlade('system', this)">System</div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        function switchBlade(viewId, element) {
+
+            // Remove active class from all blades
+
+            document.querySelectorAll('.blade').forEach(b => b.classList.remove('active'));
+
+            
+
+            // Add active class to clicked blade
+
+            element.classList.add('active');
+
+
+
+            // Hide all viewports
+
+            document.querySelectorAll('.viewport').forEach(v => v.classList.remove('active'));
+
+
+
+            // Show selected viewport
+
+            document.getElementById('view-' + viewId).classList.add('active');
+
+            
+
+            // Change background gradient slightly for effect
+
+            const bgColors = {
+
+                'home': 'linear-gradient(135deg, #70c408 0%, #1e5799 0%, #2989d8 50%, #7db9e8 100%)',
+
+                'career': 'linear-gradient(135deg, #c44008 0%, #991e56 0%, #d8295b 50%, #e87db5 100%)',
+
+                'skills': 'linear-gradient(135deg, #08c4a1 0%, #1e9988 0%, #29d8cd 50%, #7de8e1 100%)',
+
+                'system': 'linear-gradient(135deg, #666 0%, #333 0%, #444 50%, #888 100%)'
+
+            };
+
+
+
+            document.querySelector('.crt-container').style.background = bgColors[viewId];
+
+        }
+
+    </script>
+
+</body>
+
+</html>
