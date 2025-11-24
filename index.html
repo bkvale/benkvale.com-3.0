@@ -8,33 +8,41 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Ben Kvale - Dashboard</title>
+    <title>Ben Kvale | Command Center V2</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
 
+        /* === 1. Variables & Global Reset === */
+
         :root {
 
-            --xbox-green: #9bf00b;
+            --primary-bg: #111111;
 
-            --xbox-dark: #101010;
+            --secondary-bg: #1c1c1c;
 
-            --xbox-grey: #e6e6e6;
+            --accent-green: #9bf00b;
 
-            --blade-inactive: #cfcfcf;
+            --text-light: #f0f0f0;
 
-            --blade-text: #444;
+            --text-dark: #b0b0b0;
 
-            --glass: rgba(255, 255, 255, 0.15);
+            --border-color: #333333;
+
+            --card-hover-bg: #222222;
 
         }
 
 
 
-        @font-face {
+        * {
 
-            font-family: 'Segoe UI';
+            box-sizing: border-box;
 
-            src: local('Segoe UI');
+            margin: 0;
+
+            padding: 0;
 
         }
 
@@ -42,571 +50,335 @@
 
         body {
 
-            margin: 0;
+            font-family: 'Montserrat', sans-serif;
 
-            padding: 0;
+            color: var(--text-light);
 
-            background-color: #000;
+            background-color: var(--primary-bg);
 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
 
-            color: #333;
+            overflow-x: hidden;
 
-            overflow: hidden;
-
-            height: 100vh;
-
-            width: 100vw;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
+            transition: background-color 0.3s;
 
         }
 
 
 
-        /* The TV Screen Container */
-
-        .crt-container {
-
-            width: 100%;
-
-            height: 100%;
+        .container {
 
             max-width: 1400px;
 
-            max-height: 900px;
+            margin: 0 auto;
 
-            position: relative;
+            padding: 30px;
 
-            background: linear-gradient(135deg, #70c408 0%, #1e5799 0%, #2989d8 50%, #7db9e8 100%);
-
-            overflow: hidden;
-
-            box-shadow: 0 0 50px rgba(155, 240, 11, 0.2);
-
-        }
-
-
-
-        /* Abstract Background Swirls */
-
-        .bg-swirl {
-
-            position: absolute;
-
-            width: 200%;
-
-            height: 200%;
-
-            border-radius: 50%;
-
-            border: 2px solid rgba(255,255,255,0.1);
-
-            top: -50%;
-
-            left: -50%;
-
-            z-index: 0;
-
-        }
-
-        .bg-swirl:nth-child(2) { top: -40%; left: -60%; border-width: 4px; opacity: 0.5; }
-
-        .bg-swirl:nth-child(3) { top: -30%; left: -30%; border-width: 1px; opacity: 0.3; }
-
-
-
-        /* The Blade Navigation System */
-
-        .blade-system {
-
-            position: absolute;
-
-            top: 0;
-
-            left: 0;
-
-            width: 100%;
-
-            height: 100%;
-
-            z-index: 10;
-
-            display: flex;
-
-            flex-direction: column;
-
-        }
-
-
-
-        /* Content Area (Top 80%) */
-
-        .viewport {
-
-            flex: 1;
-
-            padding: 40px 60px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-            opacity: 0;
-
-            transition: opacity 0.3s ease;
-
-            position: absolute;
-
-            top: 0;
-
-            left: 0;
-
-            width: 100%;
-
-            height: 85%;
-
-            pointer-events: none; /* Default to none */
-
-            color: white;
-
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-
-        }
-
-
-
-        .viewport.active {
-
-            opacity: 1;
-
-            pointer-events: all;
-
-            z-index: 20;
-
-        }
-
-
-
-        /* The Blades (Bottom Navigation) */
-
-        .blades-container {
-
-            height: 15%;
-
-            min-height: 80px;
-
-            display: flex;
-
-            align-items: flex-end;
-
-            position: absolute;
-
-            bottom: 0;
-
-            width: 100%;
-
-            padding-left: 50px;
-
-            z-index: 30;
-
-        }
-
-
-
-        .blade {
-
-            width: 180px;
-
-            height: 60px;
-
-            background: var(--blade-inactive);
-
-            margin-right: -20px;
-
-            border-top-left-radius: 40px;
-
-            border-bottom-right-radius: 10px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            cursor: pointer;
-
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-
-            position: relative;
-
-            font-weight: bold;
-
-            text-transform: uppercase;
-
-            font-size: 1.1rem;
-
-            color: #666;
-
-            border: 2px solid rgba(255,255,255,0.5);
-
-            border-bottom: none;
-
-        }
-
-
-
-        .blade:hover {
-
-            height: 70px;
-
-            background: #e0e0e0;
-
-        }
-
-
-
-        .blade.active {
-
-            height: 90px; /* Expands up */
-
-            background: var(--xbox-green);
-
-            color: #fff;
-
-            z-index: 100;
-
-            margin-bottom: 0;
-
-            box-shadow: 0 0 20px rgba(155, 240, 11, 0.6);
-
-            border-color: #fff;
-
-            width: 220px;
-
-        }
-
-
-
-        /* ---- VIEWPORT 1: GAMERCARD (PROFILE) ---- */
-
-        .profile-card {
-
-            display: flex;
-
-            align-items: center;
+            display: grid;
 
             gap: 40px;
 
+            grid-template-columns: 1fr;
+
         }
 
 
 
-        .avatar-zone {
+        /* === 2. Keyframe Animations === */
 
-            width: 200px;
+        @keyframes glow {
 
-            height: 200px;
+            0% { box-shadow: 0 0 5px var(--accent-green); }
 
-            background: #333;
+            50% { box-shadow: 0 0 15px var(--accent-green), 0 0 5px var(--accent-green); }
 
-            border: 4px solid #fff;
+            100% { box-shadow: 0 0 5px var(--accent-green); }
 
-            border-radius: 10px;
+        }
+
+        
+
+        @keyframes slideIn {
+
+            0% { transform: translateX(100%); opacity: 0; }
+
+            100% { transform: translateX(0); opacity: 1; }
+
+        }
+
+
+
+        @keyframes slideOut {
+
+            0% { transform: translateX(0); opacity: 1; }
+
+            100% { transform: translateX(100%); opacity: 0; }
+
+        }
+
+
+
+        /* === 3. Hero Section === */
+
+        .hero-section {
+
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, #000 100%);
+
+            border: 1px solid var(--border-color);
+
+            padding: 60px 40px;
 
             display: flex;
 
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 4rem;
-
-            color: var(--xbox-green);
-
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
-
-        }
-
-
-
-        .stats-zone h1 {
-
-            font-size: 3.5rem;
-
-            margin: 0;
-
-            text-transform: uppercase;
-
-            letter-spacing: -2px;
-
-        }
-
-
-
-        .stats-zone h2 {
-
-            font-size: 1.5rem;
-
-            font-weight: 400;
-
-            margin: 5px 0 20px 0;
-
-            opacity: 0.9;
-
-        }
-
-
-
-        .gamerscore {
-
-            display: inline-flex;
+            justify-content: space-between;
 
             align-items: center;
 
-            background: #fff;
+            position: relative;
 
-            color: #333;
-
-            padding: 5px 15px;
-
-            border-radius: 20px;
-
-            font-weight: bold;
-
-            font-size: 1.2rem;
-
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-
-        }
-
-
-
-        .g-icon {
-
-            background: var(--xbox-green);
-
-            color: white;
-
-            border-radius: 50%;
-
-            width: 24px;
-
-            height: 24px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            margin-right: 8px;
-
-            font-size: 0.8rem;
-
-        }
-
-
-
-        .rep-stars {
-
-            color: var(--xbox-green);
-
-            font-size: 1.2rem;
-
-            margin-top: 10px;
-
-        }
-
-
-
-        .summary-text {
-
-            max-width: 600px;
-
-            margin-top: 20px;
-
-            font-size: 1.1rem;
-
-            line-height: 1.5;
-
-            background: rgba(0,0,0,0.3);
-
-            padding: 20px;
+            overflow: hidden;
 
             border-radius: 8px;
 
-            border-left: 4px solid var(--xbox-green);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 5px rgba(155, 240, 11, 0.1);
+
+            min-height: 350px;
 
         }
 
 
 
-        /* ---- VIEWPORT 2: ACHIEVEMENTS (EXPERIENCE) ---- */
+        .hero-content { z-index: 2; max-width: 700px; }
 
-        .achievement-list {
 
-            display: grid;
 
-            grid-template-columns: 1fr;
+        .hero-content h1 {
+
+            font-family: 'Orbitron', sans-serif;
+
+            font-size: 3.5em;
+
+            color: var(--accent-green);
+
+            margin-bottom: 10px;
+
+            text-shadow: 0 0 10px rgba(155, 240, 11, 0.5);
+
+            line-height: 1;
+
+        }
+
+
+
+        .hero-content h2 {
+
+            font-size: 1.8em;
+
+            color: var(--text-light);
+
+            font-weight: 500;
+
+            margin-bottom: 20px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            border-bottom: 2px solid var(--accent-green);
+
+            display: inline-block;
+
+            padding-bottom: 5px;
+
+        }
+
+
+
+        .hero-content p { font-size: 1.1em; color: var(--text-dark); margin-bottom: 30px; }
+
+
+
+        .hero-links a {
+
+            display: inline-block;
+
+            background-color: var(--accent-green);
+
+            color: var(--primary-bg);
+
+            padding: 12px 25px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-family: 'Orbitron', sans-serif;
+
+            margin-right: 15px;
+
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s;
+
+            box-shadow: 0 0 10px rgba(155, 240, 11, 0.4);
+
+        }
+
+
+
+        .hero-links a:hover {
+
+            background-color: #b3ff30;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 0 15px #b3ff30;
+
+        }
+
+
+
+        .character-model {
+
+            position: absolute;
+
+            right: 0px;
+
+            bottom: -5px;
+
+            width: 400px;
+
+            height: auto;
+
+            z-index: 1;
+
+            opacity: 0.8;
+
+            filter: grayscale(10%) brightness(0.9) drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
+
+            transition: opacity 0.3s ease, filter 0.3s ease;
+
+        }
+
+
+
+        .character-model:hover {
+
+            opacity: 1;
+
+            filter: grayscale(0%) brightness(1) drop-shadow(0 0 25px rgba(155, 240, 11, 0.8));
+
+        }
+
+
+
+        /* === 4. Section Headers & Layout === */
+
+        .section-header {
+
+            margin-bottom: 30px;
+
+            display: flex;
+
+            align-items: center;
 
             gap: 15px;
 
-            max-height: 80%;
+            border-bottom: 1px solid var(--border-color);
 
-            overflow-y: auto;
-
-            padding-right: 20px;
+            padding-bottom: 15px;
 
         }
 
 
 
-        .achievement-row {
+        .section-header h3 {
 
-            background: rgba(255,255,255,0.9);
+            font-family: 'Orbitron', sans-serif;
 
-            color: #333;
+            font-size: 1.8em;
 
-            padding: 15px 20px;
-
-            border-radius: 4px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 20px;
-
-            transition: transform 0.2s;
-
-            text-shadow: none;
-
-        }
-
-
-
-        .achievement-row:hover {
-
-            transform: scale(1.02);
-
-            border-left: 10px solid var(--xbox-green);
-
-        }
-
-
-
-        .ach-icon {
-
-            width: 50px;
-
-            height: 50px;
-
-            background: #ddd;
-
-            border-radius: 50%;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 1.5rem;
-
-            flex-shrink: 0;
-
-        }
-
-
-
-        .ach-details {
-
-            flex: 1;
-
-        }
-
-
-
-        .ach-title {
-
-            font-weight: 800;
-
-            font-size: 1.1rem;
-
-            color: var(--xbox-dark);
+            color: var(--text-light);
 
             text-transform: uppercase;
 
-        }
-
-
-
-        .ach-desc {
-
-            font-size: 0.9rem;
-
-            color: #555;
+            letter-spacing: 1px;
 
         }
 
 
 
-        .ach-points {
+        .section-header .icon {
 
-            font-weight: bold;
+            color: var(--accent-green);
 
-            color: #888;
-
-            font-size: 0.9rem;
+            font-size: 1.5em;
 
         }
 
 
 
-        /* ---- VIEWPORT 3: SKILL TREE ---- */
+        /* Quest / Activity Grid */
 
-        .skill-grid {
+        .quest-grid {
 
             display: grid;
 
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
-            gap: 20px;
+            gap: 30px;
 
         }
 
 
 
-        .skill-box {
+        .quest-card {
 
-            background: rgba(0,0,0,0.4);
+            background-color: var(--secondary-bg);
 
-            border: 2px solid rgba(255,255,255,0.3);
-
-            padding: 20px;
+            border: 1px solid var(--border-color);
 
             border-radius: 8px;
 
+            padding: 25px;
+
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+
+            display: flex;
+
+            flex-direction: column;
+
         }
 
 
 
-        .skill-box h3 {
+        .quest-card:hover {
 
-            margin-top: 0;
+            transform: translateY(-5px);
 
-            color: var(--xbox-green);
+            box-shadow: 0 0 25px rgba(155, 240, 11, 0.3);
 
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            border-color: var(--accent-green);
+
+            background-color: var(--card-hover-bg);
+
+        }
+
+
+
+        .quest-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+
+            border-bottom: 1px dashed var(--border-color);
 
             padding-bottom: 10px;
 
@@ -614,77 +386,513 @@
 
 
 
-        .tag-cloud span {
+        .quest-header h4 {
 
-            display: inline-block;
+            font-family: 'Orbitron', sans-serif;
 
-            background: rgba(255,255,255,0.2);
+            font-size: 1.2em;
 
-            padding: 4px 10px;
+            color: var(--text-light);
 
-            margin: 4px;
+            text-transform: uppercase;
+
+        }
+
+
+
+        .quest-status {
+
+            background-color: var(--accent-green);
+
+            color: var(--primary-bg);
+
+            padding: 5px 10px;
 
             border-radius: 4px;
 
-            font-size: 0.9rem;
+            font-size: 0.8em;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
 
         }
 
 
 
-        /* ---- VIEWPORT 4: SYSTEM INFO (CONTACT) ---- */
+        .quest-status.in-progress { background-color: #ff9800; }
 
-        .system-info {
+        .quest-status.complete { background-color: var(--accent-green); animation: glow 1.5s infinite alternate; }
 
-            background: rgba(255,255,255,0.95);
+        .quest-status.pending { background-color: #4CAF50; }
 
-            color: #222;
 
-            padding: 40px;
 
-            border-radius: 10px;
+        .quest-description { font-size: 0.9em; color: var(--text-dark); margin-bottom: 20px; flex-grow: 1; }
 
-            text-shadow: none;
 
-            max-width: 600px;
 
-            margin: 0 auto;
+        .quest-objectives ul { list-style: none; margin-bottom: 20px; }
+
+
+
+        .quest-objectives li {
+
+            font-size: 0.9em;
+
+            color: var(--text-light);
+
+            margin-bottom: 8px;
+
+            display: flex;
+
+            align-items: center;
 
         }
 
 
 
-        .info-row {
+        .objective-icon { color: var(--accent-green); margin-right: 10px; font-size: 1.1em; }
+
+        .objective-icon.complete { color: var(--accent-green); }
+
+        .objective-icon.pending { color: var(--text-dark); }
+
+
+
+
+
+        .progress-bar-container {
+
+            background-color: #333;
+
+            border-radius: 5px;
+
+            height: 10px;
+
+            margin-top: auto;
+
+            margin-bottom: 10px;
+
+            overflow: hidden;
+
+            border: 1px solid #444;
+
+        }
+
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            background-color: var(--accent-green);
+
+            border-radius: 5px;
+
+            width: 0%;
+
+            transition: width 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+        }
+
+
+
+        .xp-info {
 
             display: flex;
 
             justify-content: space-between;
 
-            border-bottom: 1px solid #ccc;
+            align-items: center;
 
-            padding: 10px 0;
+            font-size: 0.9em;
+
+            color: var(--text-dark);
+
+            border-top: 1px dashed var(--border-color);
+
+            padding-top: 10px;
 
         }
 
 
 
-        .info-label { font-weight: bold; color: #666; }
-
-        .info-value { font-weight: bold; color: var(--xbox-dark); }
-
-        .info-value a { color: #0077b5; text-decoration: none; }
+        .xp-value { color: var(--accent-green); font-weight: bold; }
 
 
 
-        /* Scrollbar styling */
+        /* === 5. Summary Stats === */
 
-        ::-webkit-scrollbar { width: 8px; }
+        .summary-stats {
 
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+            display: grid;
 
-        ::-webkit-scrollbar-thumb { background: var(--xbox-green); border-radius: 4px; }
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 30px;
+
+            margin-top: 40px;
+
+        }
 
 
+
+        .stat-card {
+
+            background-color: var(--secondary-bg);
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 8px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+            transition: transform 0.2s;
+
+        }
+
+
+
+        .stat-card:hover {
+
+            transform: scale(1.03);
+
+            border-color: var(--accent-green);
+
+        }
+
+
+
+        .stat-card .icon { color: var(--accent-green); font-size: 2.5em; margin-bottom: 10px; }
+
+
+
+        .stat-card h5 {
+
+            font-family: 'Orbitron', sans-serif;
+
+            font-size: 1.1em;
+
+            color: var(--text-dark);
+
+            margin-bottom: 10px;
+
+            text-transform: uppercase;
+
+        }
+
+
+
+        .stat-card .value {
+
+            font-family: 'Orbitron', sans-serif;
+
+            font-size: 2.2em;
+
+            color: var(--text-light);
+
+            font-weight: bold;
+
+        }
+
+
+
+        .stat-card .sub-text { font-size: 0.8em; color: var(--text-dark); margin-top: 5px; }
+
+
+
+        /* === 6. Contact Section (Form) === */
+
+        .contact-section {
+
+            background-color: var(--secondary-bg);
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 8px;
+
+            padding: 40px;
+
+            margin-top: 40px;
+
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+        }
+
+        
+
+        .contact-form { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; }
+
+        .form-group { display: flex; flex-direction: column; }
+
+        .form-group.full-width { grid-column: 1 / -1; }
+
+        .form-group label {
+
+            font-size: 0.9em;
+
+            color: var(--text-dark);
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+
+        .form-group input, .form-group textarea {
+
+            background-color: #333;
+
+            border: 1px solid var(--border-color);
+
+            padding: 12px;
+
+            border-radius: 5px;
+
+            color: var(--text-light);
+
+            font-family: 'Montserrat', sans-serif;
+
+            font-size: 1em;
+
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+        }
+
+
+
+        .form-group input:focus, .form-group textarea:focus {
+
+            outline: none;
+
+            border-color: var(--accent-green);
+
+            box-shadow: 0 0 0 2px rgba(155, 240, 11, 0.3);
+
+        }
+
+
+
+        .form-group textarea { resize: vertical; min-height: 120px; }
+
+
+
+        .submit-btn {
+
+            grid-column: 1 / -1;
+
+            background-color: var(--accent-green);
+
+            color: var(--primary-bg);
+
+            padding: 15px 30px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            font-family: 'Orbitron', sans-serif;
+
+            font-size: 1.1em;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s;
+
+            box-shadow: 0 4px 15px rgba(155, 240, 11, 0.4);
+
+            text-transform: uppercase;
+
+        }
+
+
+
+        .submit-btn:hover {
+
+            background-color: #b3ff30;
+
+            transform: translateY(-2px);
+
+            box-shadow: 0 4px 20px #b3ff30;
+
+        }
+
+
+
+        /* === 7. Achievement Notification === */
+
+        #achievement-notification {
+
+            position: fixed;
+
+            top: 50px;
+
+            right: 0;
+
+            width: 300px;
+
+            background-color: var(--secondary-bg);
+
+            border-left: 5px solid var(--accent-green);
+
+            padding: 15px;
+
+            color: var(--text-light);
+
+            font-family: 'Orbitron', sans-serif;
+
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+            border-radius: 5px 0 0 5px;
+
+            transform: translateX(100%);
+
+            opacity: 0;
+
+            z-index: 1000;
+
+        }
+
+        
+
+        #achievement-notification.show {
+
+            animation: slideIn 0.5s ease-out forwards, glow 1.5s infinite alternate 0.5s;
+
+        }
+
+
+
+        .achievement-icon {
+
+            color: var(--accent-green);
+
+            font-size: 1.5em;
+
+            margin-right: 10px;
+
+            float: left;
+
+        }
+
+
+
+        .achievement-text {
+
+            overflow: hidden;
+
+        }
+
+        
+
+        .achievement-title {
+
+            font-size: 1em;
+
+            color: var(--accent-green);
+
+            font-weight: bold;
+
+        }
+
+        
+
+        .achievement-description {
+
+            font-size: 0.8em;
+
+            color: var(--text-dark);
+
+            margin-top: 3px;
+
+        }
+
+
+
+        /* === 8. Footer === */
+
+        footer {
+
+            text-align: center;
+
+            padding: 30px;
+
+            color: var(--text-dark);
+
+            font-size: 0.9em;
+
+            border-top: 1px solid var(--border-color);
+
+            margin-top: 40px;
+
+        }
+
+
+
+        /* === 9. Responsive Adjustments === */
+
+        @media (max-width: 1024px) {
+
+            .hero-section {
+
+                flex-direction: column;
+
+                text-align: center;
+
+                padding: 40px 20px;
+
+                min-height: auto;
+
+            }
+
+            .character-model {
+
+                position: static;
+
+                margin-top: 30px;
+
+                max-width: 300px;
+
+                width: 100%;
+
+            }
+
+            .hero-content { max-width: 100%; }
+
+            .hero-content h1 { font-size: 2.8em; }
+
+            .hero-content h2 { font-size: 1.5em; }
+
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            .container { padding: 20px; }
+
+            .hero-content h1 { font-size: 2.2em; }
+
+            .hero-content h2 { font-size: 1.2em; }
+
+            .hero-links a { padding: 10px 20px; font-size: 0.9em; margin-bottom: 10px; }
+
+            .quest-grid, .summary-stats { grid-template-columns: 1fr; }
+
+            .contact-form { grid-template-columns: 1fr; }
+
+        }
 
     </style>
 
@@ -694,49 +902,239 @@
 
 
 
-    <div class="crt-container">
-
-        <div class="bg-swirl"></div>
-
-        <div class="bg-swirl"></div>
-
-        <div class="bg-swirl"></div>
+    <div class="container">
 
 
 
-        <div class="blade-system">
+        <div id="achievement-notification">
+
+            <div class="achievement-icon">★</div>
+
+            <div class="achievement-text">
+
+                <div class="achievement-title">PROFILE LOADED</div>
+
+                <div class="achievement-description">Welcome, B2B Demand Gen Strategist.</div>
+
+            </div>
+
+        </div>
+
+
+
+        <section class="hero-section">
+
+            <div class="hero-content">
+
+                <h1>BEN KVALE</h1>
+
+                <h2>B2B Demand Gen Strategist | AI-Driven Marketer</h2>
+
+                <p>Leading the charge in creating robust demand generation pipelines and optimizing marketing tech stacks. I leverage **AI tools (ChatGPT, Claude, Gemini)** to innovate, scale content, and drive measurable business growth.</p>
+
+                <div class="hero-links">
+
+                    <a href="#quests">View Quests</a>
+
+                    <a href="#contact">Connect</a>
+
+                </div>
+
+            </div>
 
             
 
-            <div id="view-home" class="viewport active">
+            <img src="https://via.placeholder.com/400x400/000/9bf00b?text=AGENT+KVALE+LOADED" alt="Character Model" class="character-model">
 
-                <div class="profile-card">
+        </section>
 
-                    <div class="avatar-zone">
 
-                        BK
+
+        <section id="quests">
+
+            <div class="section-header">
+
+                <span class="icon">&#9733;</span>
+
+                <h3>ACTIVE QUESTS</h3>
+
+            </div>
+
+            <div class="quest-grid">
+
+                
+
+                <div class="quest-card">
+
+                    <div class="quest-header">
+
+                        <h4>Trace3: Associate Marketing Manager</h4>
+
+                        <span class="quest-status complete">Complete</span>
 
                     </div>
 
-                    <div class="stats-zone">
+                    <p class="quest-description">
 
-                        <h1>Ben Kvale</h1>
+                        MarTech Lead and **AI Center of Excellence** representative, driving HubSpot & ERP integrations and data strategies.
 
-                        <h2>B2B Demand Gen Strategist</h2>
+                    </p>
 
-                        <div class="gamerscore">
+                    <div class="quest-objectives">
 
-                            <div class="g-icon">G</div>
+                        <ul>
 
-                            7000 </div>
+                            <li><span class="objective-icon complete">&#10003;</span> Led HubSpot & **NetSuite** ERP API integration.</li>
 
-                        <div class="rep-stars">★★★★★</div>
+                            <li><span class="objective-icon complete">&#10003;</span> **CRM** data de-duplication strategy implementation.</li>
 
-                        <div class="summary-text">
+                            <li><span class="objective-icon complete">&#10003;</span> Advised on **AI-driven strategies** and automation.</li>
 
-                            "I thrive in fast-paced environments where I can own the full funnel. I specialize in B2B demand generation, campaign strategy, and blending ABM with lifecycle marketing."
+                            <li><span class="objective-icon complete">&#10003;</span> Developed new Partner Marketing **paid media offering**.</li>
 
-                        </div>
+                        </ul>
+
+                    </div>
+
+                    <div class="progress-bar-container"><div class="progress-bar" style="width: 100%;"></div></div>
+
+                    <div class="xp-info">
+
+                        <span>XP Earned:</span>
+
+                        <span class="xp-value">2000 / 2000 XP</span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="quest-card">
+
+                    <div class="quest-header">
+
+                        <h4>Tail Wind: Marketing Manager</h4>
+
+                        <span class="quest-status complete">Complete</span>
+
+                    </div>
+
+                    <p class="quest-description">
+
+                        Owned execution of all marketing channels, enhanced brand visibility, and managed key partner relationships (Snowflake, Databricks).
+
+                    </p>
+
+                    <div class="quest-objectives">
+
+                        <ul>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Executed multi-channel digital campaigns.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Managed HubSpot for email campaign optimization.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> **Partner Relationship Management** (Windows, Snowflake, Databricks).</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="progress-bar-container"><div class="progress-bar" style="width: 100%;"></div></div>
+
+                    <div class="xp-info">
+
+                        <span>XP Earned:</span>
+
+                        <span class="xp-value">1400 / 1400 XP</span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="quest-card">
+
+                    <div class="quest-header">
+
+                        <h4>Digi: Digital Marketing Specialist II</h4>
+
+                        <span class="quest-status complete">Complete</span>
+
+                    </div>
+
+                    <p class="quest-description">
+
+                        Created and implemented inbound marketing demand-gen campaigns and managed reporting on Marketing Automation KPIs.
+
+                    </p>
+
+                    <div class="quest-objectives">
+
+                        <ul>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Implemented inbound demand-gen campaigns & activities.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Managed and promoted internally hosted & partnered webinars.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Data-driven visual reporting on **HubSpot** KPIs.</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="progress-bar-container"><div class="progress-bar" style="width: 100%;"></div></div>
+
+                    <div class="xp-info">
+
+                        <span>XP Earned:</span>
+
+                        <span class="xp-value">1200 / 1200 XP</span>
+
+                    </div>
+
+                </div>
+
+                 
+
+                <div class="quest-card">
+
+                    <div class="quest-header">
+
+                        <h4>Talencio: Marketing Specialist/Intern</h4>
+
+                        <span class="quest-status complete">Complete</span>
+
+                    </div>
+
+                    <p class="quest-description">
+
+                        **Redesigned company website**, increasing sessions by **over 300%**. Executed multi-channel marketing plan & SEO.
+
+                    </p>
+
+                    <div class="quest-objectives">
+
+                        <ul>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Launched double-digit LI sponsored content campaign.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Relaunched company email marketing platform/strategy.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> **CRM** database organization (~50,000 records).</li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="progress-bar-container"><div class="progress-bar" style="width: 100%;"></div></div>
+
+                    <div class="xp-info">
+
+                        <span>XP Earned:</span>
+
+                        <span class="xp-value">1000 / 1000 XP</span>
 
                     </div>
 
@@ -744,89 +1142,171 @@
 
             </div>
 
+            
+
+            <div class="summary-stats">
+
+                <div class="stat-card">
+
+                    <span class="icon">&#x26A1;</span>
+
+                    <h5>Total XP</h5>
+
+                    <div class="value">5,600</div>
+
+                    <div class="sub-text">Total Experience Points</div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="icon">&#9733;</span>
+
+                    <h5>Active Quests</h5>
+
+                    <div class="value">0</div>
+
+                    <div class="sub-text">Currently Engaged</div>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <span class="icon">&#10003;</span>
+
+                    <h5>Completion Rate</h5>
+
+                    <div class="value">100%</div>
+
+                    <div class="sub-text">All Primary Objectives Achieved</div>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-            <div id="view-career" class="viewport">
 
-                <h2>Mission Log</h2>
+        <section id="skills">
 
-                <div class="achievement-list">
+            <div class="section-header">
 
-                    <div class="achievement-row">
+                <span class="icon">&#9881;</span>
 
-                        <div class="ach-icon">🏆</div>
+                <h3>SKILL TREE</h3>
 
-                        <div class="ach-details">
+            </div>
 
-                            <div class="ach-title">Trace3: MarTech Lead</div>
+            <div class="quest-grid">
 
-                            <div class="ach-desc">Integrated HubSpot with NetSuite ERP via API. Lead AI Center of Excellence strategy.</div>
+                <div class="quest-card">
 
-                            <div class="ach-points">2024 - Present</div>
+                    <div class="quest-header">
 
-                        </div>
+                        <h4>Tech Stack Mastery</h4>
 
-                        <div class="ach-points">2000 G</div>
+                        <span class="quest-status complete">Mastered</span>
 
                     </div>
 
+                    <p class="quest-description">Hands-on with the MarTech stack, including CRM integrations.</p>
 
+                    <div class="quest-objectives">
 
-                    <div class="achievement-row">
+                        <ul>
 
-                        <div class="ach-icon">🔓</div>
+                            <li><span class="objective-icon complete">&#10003;</span> HubSpot (Automation, CRM).</li>
 
-                        <div class="ach-details">
+                            <li><span class="objective-icon complete">&#10003;</span> NetSuite, ZoomInfo, Crossbeam.</li>
 
-                            <div class="ach-title">Tail Wind: Marketing Manager</div>
+                            <li><span class="objective-icon complete">&#10003;</span> Power BI for Analytics.</li>
 
-                            <div class="ach-desc">Owned execution of all marketing channels. Managed Partner relationships (Snowflake, Databricks).</div>
-
-                            <div class="ach-points">2022 - 2024</div>
-
-                        </div>
-
-                        <div class="ach-points">1400 G</div>
+                        </ul>
 
                     </div>
 
+                </div>
 
+                <div class="quest-card">
 
-                    <div class="achievement-row">
+                    <div class="quest-header">
 
-                        <div class="ach-icon">🔓</div>
+                        <h4>AI & Intelligence Integration</h4>
 
-                        <div class="ach-details">
-
-                            <div class="ach-title">Digi: Digital Specialist II</div>
-
-                            <div class="ach-desc">Created inbound demand-gen campaigns. Data-driven visual reporting on KPIs.</div>
-
-                            <div class="ach-points">2021 - 2023</div>
-
-                        </div>
-
-                        <div class="ach-points">1200 G</div>
+                        <span class="quest-status complete">Fluent</span>
 
                     </div>
 
+                    <p class="quest-description">Building prompt-based workflows and content ops systems.</p>
 
+                    <div class="quest-objectives">
 
-                     <div class="achievement-row">
+                        <ul>
 
-                        <div class="ach-icon">🔓</div>
+                            <li><span class="objective-icon complete">&#10003;</span> ChatGPT, Claude, Gemini.</li>
 
-                        <div class="ach-details">
+                            <li><span class="objective-icon complete">&#10003;</span> Glean, DALL*E, Microsoft 365 CoPilot.</li>
 
-                            <div class="ach-title">Talencio: Marketing Specialist</div>
+                            <li><span class="objective-icon complete">&#10003;</span> AI Center of Excellence member.</li>
 
-                            <div class="ach-desc">Executed multi-channel marketing plans. Built company brand across functional areas.</div>
+                        </ul>
 
-                            <div class="ach-points">2019 - 2021</div>
+                    </div>
 
-                        </div>
+                </div>
 
-                        <div class="ach-points">1000 G</div>
+                <div class="quest-card">
+
+                    <div class="quest-header">
+
+                        <h4>Strategy & RevOps</h4>
+
+                        <span class="quest-status complete">Strategic</span>
+
+                    </div>
+
+                    <p class="quest-description">Specializing in B2B demand generation and full-funnel strategy.</p>
+
+                    <div class="quest-objectives">
+
+                        <ul>
+
+                            <li><span class="objective-icon complete">&#10003;</span> B2B Demand Generation & Pipeline Marketing.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> ABM & Campaign Orchestration.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> Lifecycle Marketing & Lead Scoring.</li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="quest-card">
+
+                    <div class="quest-header">
+
+                        <h4>Certifications & Education</h4>
+
+                        <span class="quest-status complete">Certified</span>
+
+                    </div>
+
+                    <p class="quest-description">Formal training in Marketing and Entrepreneurship.</p>
+
+                    <div class="quest-objectives">
+
+                        <ul>
+
+                            <li><span class="objective-icon complete">&#10003;</span> **B.S.** Marketing & Entrepreneurship (North Central University).</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> **Revenue Operations** & Inbound Marketing Certified.</li>
+
+                            <li><span class="objective-icon complete">&#10003;</span> **AI Legends** Foundations Certification.</li>
+
+                        </ul>
 
                     </div>
 
@@ -834,235 +1314,119 @@
 
             </div>
 
+        </section>
 
 
-            <div id="view-skills" class="viewport">
 
-                <h2>Skill Tree</h2>
+        <section id="contact" class="contact-section">
 
-                <div class="skill-grid">
+            <div class="section-header">
 
-                    <div class="skill-box">
+                <span class="icon">&#9993;</span>
 
-                        <h3>Tech Stack</h3>
-
-                        <div class="tag-cloud">
-
-                            <span>HubSpot (Expert)</span>
-
-                            <span>NetSuite ERP</span>
-
-                            <span>ZoomInfo</span>
-
-                            <span>Crossbeam</span>
-
-                            <span>Power BI</span>
-
-                        </div>
-
-                    </div>
-
-                    <div class="skill-box">
-
-                        <h3>AI / Intelligence</h3>
-
-                        <div class="tag-cloud">
-
-                            <span>ChatGPT</span>
-
-                            <span>Claude</span>
-
-                            <span>Gemini</span>
-
-                            <span>Glean</span>
-
-                            <span>365 CoPilot</span>
-
-                        </div>
-
-                    </div>
-
-                    <div class="skill-box">
-
-                        <h3>Strategy</h3>
-
-                        <div class="tag-cloud">
-
-                            <span>B2B Demand Gen</span>
-
-                            <span>ABM</span>
-
-                            <span>RevOps</span>
-
-                            <span>Lead Scoring</span>
-
-                            <span>Pipeline Marketing</span>
-
-                        </div>
-
-                    </div>
-
-                     <div class="skill-box">
-
-                        <h3>Certifications</h3>
-
-                        <div class="tag-cloud">
-
-                            <span>HubSpot Inbound</span>
-
-                            <span>HubSpot RevOps</span>
-
-                            <span>AI Legends Foundations</span>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <h3>SEND MESSAGE</h3>
 
             </div>
 
+            <form class="contact-form">
 
+                <div class="form-group">
 
-            <div id="view-system" class="viewport">
+                    <label for="your-gamertag">Your Gamertag</label>
 
-                <div class="system-info">
-
-                    <h2 style="color:#333; margin-top:0;">System Settings</h2>
-
-                    
-
-                    <div class="info-row">
-
-                        <span class="info-label">Gamertag</span>
-
-                        <span class="info-value">Ben Kvale</span>
-
-                    </div>
-
-                    <div class="info-row">
-
-                        <span class="info-label">Location</span>
-
-                        <span class="info-value">Minneapolis, MN</span>
-
-                    </div>
-
-                    <div class="info-row">
-
-                        <span class="info-label">Email</span>
-
-                        <span class="info-value"><a href="mailto:benkvale@gmail.com">benkvale@gmail.com</a></span>
-
-                    </div>
-
-                    <div class="info-row">
-
-                        <span class="info-label">Phone</span>
-
-                        <span class="info-value">320.434.0445</span>
-
-                    </div>
-
-                    <div class="info-row">
-
-                        <span class="info-label">LinkedIn</span>
-
-                        <span class="info-value"><a href="https://linkedin.com/in/benkvale" target="_blank">/in/benkvale</a></span>
-
-                    </div>
-
-                    <div class="info-row">
-
-                        <span class="info-label">Character Class</span>
-
-                        <span class="info-value">INTP / Type 4</span>
-
-                    </div>
-
-                     <div class="info-row">
-
-                        <span class="info-label">Education</span>
-
-                        <span class="info-value">B.S. Marketing (North Central Univ)</span>
-
-                    </div>
+                    <input type="text" id="your-gamertag" placeholder="Your Name" required>
 
                 </div>
 
-            </div>
+                <div class="form-group">
+
+                    <label for="contact-info">Contact Info</label>
+
+                    <input type="email" id="contact-info" placeholder="email@domain.com" required>
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label for="message">Message</label>
+
+                    <textarea id="message" placeholder="Type your message here..." required></textarea>
+
+                </div>
+
+                <button type="submit" class="submit-btn">Send Friend Request</button>
+
+            </form>
+
+        </section>
 
 
-
-        </div>
-
-
-
-        <div class="blades-container">
-
-            <div class="blade active" onclick="switchBlade('home', this)">Profile</div>
-
-            <div class="blade" onclick="switchBlade('career', this)">Career</div>
-
-            <div class="blade" onclick="switchBlade('skills', this)">Skills</div>
-
-            <div class="blade" onclick="switchBlade('system', this)">System</div>
-
-        </div>
 
     </div>
 
 
 
+    <footer>
+
+        <p>Contact: benkvale@gmail.com | (320) 434-0445 | &copy; 2024 Ben Kvale. Command Center Operational.</p>
+
+    </footer>
+
+
+
     <script>
 
-        function switchBlade(viewId, element) {
+        document.addEventListener('DOMContentLoaded', () => {
 
-            // Remove active class from all blades
+            // 1. Progress Bar Animation
 
-            document.querySelectorAll('.blade').forEach(b => b.classList.remove('active'));
+            const questCards = document.querySelectorAll('.quest-card');
 
-            
+            questCards.forEach(card => {
 
-            // Add active class to clicked blade
+                const progressBar = card.querySelector('.progress-bar');
 
-            element.classList.add('active');
+                // All quests are complete, so set width to 100%
 
+                progressBar.style.width = '100%'; 
 
-
-            // Hide all viewports
-
-            document.querySelectorAll('.viewport').forEach(v => v.classList.remove('active'));
+            });
 
 
 
-            // Show selected viewport
+            // 2. Achievement Pop-up
 
-            document.getElementById('view-' + viewId).classList.add('active');
+            const achievement = document.getElementById('achievement-notification');
 
             
 
-            // Change background gradient slightly for effect
+            // Show the notification after a short delay
 
-            const bgColors = {
+            setTimeout(() => {
 
-                'home': 'linear-gradient(135deg, #70c408 0%, #1e5799 0%, #2989d8 50%, #7db9e8 100%)',
+                achievement.classList.add('show');
 
-                'career': 'linear-gradient(135deg, #c44008 0%, #991e56 0%, #d8295b 50%, #e87db5 100%)',
-
-                'skills': 'linear-gradient(135deg, #08c4a1 0%, #1e9988 0%, #29d8cd 50%, #7de8e1 100%)',
-
-                'system': 'linear-gradient(135deg, #666 0%, #333 0%, #444 50%, #888 100%)'
-
-            };
+            }, 500);
 
 
 
-            document.querySelector('.crt-container').style.background = bgColors[viewId];
+            // Hide the notification after 5 seconds
 
-        }
+            setTimeout(() => {
+
+                // Using a separate class for the fade-out effect if needed, but for simplicity, removing 'show'
+
+                // This relies on the 'slideIn' animation to be non-persistent or we need a specific 'slideOut'
+
+                achievement.style.animation = 'slideOut 0.5s ease-in forwards';
+
+            }, 5000);
+
+        });
 
     </script>
+
+
 
 </body>
 
