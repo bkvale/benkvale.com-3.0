@@ -242,13 +242,17 @@
 
             position: absolute;
 
-            right: -50px;
+            right: 20px;
 
             bottom: -5px;
 
-            width: 450px;
+            width: 350px;
+
+            max-width: 30%;
 
             height: auto;
+
+            object-fit: contain;
 
             z-index: 1;
 
@@ -626,7 +630,12 @@
 
         
 
-        .contact-form { display: grid; gap: 20px; grid-template-columns: 1fr 1fr; }
+        .contact-form { 
+            max-width: 400px;
+            margin: 20px auto;
+            display: grid;
+            gap: 15px;
+        }
 
         .form-group { display: flex; flex-direction: column; }
 
@@ -686,9 +695,69 @@
 
 
 
+        /* Direct form input styling (for Formspree form) */
+
+        .contact-form input, .contact-form textarea {
+
+            background-color: #333;
+
+            border: 1px solid var(--border-color);
+
+            padding: 12px;
+
+            border-radius: 5px;
+
+            color: var(--text-light);
+
+            font-family: 'Montserrat', sans-serif;
+
+            font-size: 1em;
+
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+            width: 100%;
+
+        }
+
+
+
+        .contact-form input:focus, .contact-form textarea:focus {
+
+            outline: none;
+
+            border-color: var(--accent-green);
+
+            box-shadow: 0 0 0 2px rgba(155, 240, 11, 0.3);
+
+        }
+
+
+
+        .contact-form textarea { resize: vertical; min-height: 120px; }
+
+
+
+        .form-subtext {
+
+            text-align: center;
+
+            font-size: 0.85em;
+
+            color: var(--text-dark);
+
+            margin-top: 20px;
+
+            font-style: italic;
+
+        }
+
+
+
         .submit-btn {
 
             grid-column: 1 / -1;
+
+            width: 100%;
 
             background-color: var(--accent-green);
 
@@ -860,15 +929,9 @@
 
                 position: static;
 
-                margin-top: 20px;
+                margin: 20px auto 0 auto;
 
-                max-width: 250px;
-
-                max-height: 250px;
-
-                object-fit: contain;
-
-                width: 100%;
+                width: 80%;
 
             }
 
@@ -940,7 +1003,7 @@
 
                     <a href="#quests">View Quests</a>
 
-                    <a href="#contact">Connect</a>
+                    <a href="https://www.linkedin.com/in/benkvale/" target="_blank" rel="noopener noreferrer">Connect</a>
 
                 </div>
 
@@ -1348,35 +1411,39 @@
 
             </div>
 
-            <form class="contact-form">
+            <div class="contact-content">
 
-                <div class="form-group">
+                <form class="contact-form" action="https://formspree.io/f/xdkvpvnd" method="POST">
 
-                    <label for="your-gamertag">Your Gamertag</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
 
-                    <input type="text" id="your-gamertag" placeholder="Your Name" required>
 
-                </div>
 
-                <div class="form-group">
+                    <input type="email" id="email" name="_replyto" placeholder="Your Email" >
 
-                    <label for="contact-info">Contact Info</label>
 
-                    <input type="email" id="contact-info" placeholder="email@domain.com" required>
 
-                </div>
+                    <textarea id="message" name="message" placeholder="A brief message or quest idea..." rows="4" required></textarea>
 
-                <div class="form-group full-width">
 
-                    <label for="message">Message</label>
 
-                    <textarea id="message" placeholder="Type your message here..." required></textarea>
+                    <input type="hidden" name="_subject" value="New Friend Request / Quest Idea">
 
-                </div>
 
-                <button type="submit" class="submit-btn">Send Friend Request</button>
 
-            </form>
+                    <button type="submit" class="submit-btn">
+
+                        SEND FRIEND REQUEST
+
+                    </button>
+
+                </form>
+
+
+
+                <p class="form-subtext">**Note:** This form uses a free service for submission and does not require a backend.</p>
+
+            </div>
 
         </section>
 
