@@ -334,6 +334,8 @@
 
             flex-direction: column;
 
+            justify-content: flex-start; /* Forces all content to pack to the top */
+
         }
 
 
@@ -455,7 +457,7 @@
 
 
 
-        .quest-description { font-size: 0.9em; color: var(--text-dark); margin-bottom: 20px; flex-grow: 1; }
+        .quest-description { font-size: 0.9em; color: var(--text-dark); margin-bottom: 20px; flex-grow: 0; /* Set to 0 so it doesn't stretch and create gaps */ }
 
 
 
@@ -1032,15 +1034,24 @@
 
         /* === SKILL TREE LAYOUT FIX (Desktop) === */
 
-        /* On large screens, force a 4-column grid and define double-wide items */
+        /* On large screens, use a 6-column grid for flexible "Tetris" layouts */
         @media (min-width: 1024px) {
+            /* Switch to a 6-column grid for flexible "Tetris" layouts */
             #skills .quest-grid {
-                grid-template-columns: repeat(4, 1fr); /* Force exactly 4 columns */
+                grid-template-columns: repeat(6, 1fr);
             }
 
-            /* Class to make a card span two columns */
-            .quest-card.double-wide {
-                grid-column: span 2;
+            /* DEFAULT: All cards span 2 columns (3 cards per row) */
+            /* This handles the top row: MarTech, AI, Demand Gen */
+            #skills .quest-card {
+                grid-column: span 2; 
+            }
+
+            /* EXCEPTIONS: The bottom row cards span 3 columns (2 cards per row) */
+            /* This makes them split the bottom row 50/50 */
+            #skills .quest-card.card-certs,
+            #skills .quest-card.card-education {
+                grid-column: span 3;
             }
         }
 
@@ -1645,7 +1656,7 @@
 
     <footer>
 
-        <p>Contact: benkvale@gmail.com | (320) 434-0445 | &copy; 2026 Ben Kvale.</p>
+        <p>Contact: benkvale@gmail.com | &copy; 2026 Ben Kvale*</p>
 
     </footer>
 
