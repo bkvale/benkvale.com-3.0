@@ -930,26 +930,69 @@
 
                 min-height: auto;
 
-            }
+                /* THIS IS THE FIX: Forces all flex children (text and image) to center line */
 
-            /* Target the existing wrapper class for centering */
-            .character-link-wrapper {
-
-                margin: 30px auto 0 auto; /* Top 30px, Auto Left/Right (Centers it), Bottom 0 */
-
-                width: 60%; 
-
-                max-width: none; 
-
-                display: block; /* Ensures auto margins work correctly */
+                align-items: center; 
 
             }
 
-            .hero-content { max-width: 100%; }
 
-            .hero-content h1 { font-size: 2.8em; }
 
-            .hero-content h2 { font-size: 1.5em; }
+            .hero-content {
+
+                max-width: 100%;
+
+                padding-right: 0;
+
+                flex: 1 1 auto;
+
+            }
+
+
+
+            .hero-content p {
+
+                max-width: 100%;
+
+            }
+
+
+
+            .character-model {
+
+                /* Reset positioning */
+
+                position: static;
+
+                flex: none;
+
+                
+
+                /* Reset margins: 30px top, 0 left/right/bottom */
+
+                margin: 30px 0 0 0; 
+
+                
+
+                /* Fixed, reliable mobile width */
+
+                width: 280px; 
+
+                height: auto;
+
+                max-width: 100%;
+
+                object-fit: contain;
+
+            }
+
+
+
+            .quest-grid, .summary-stats { 
+
+                grid-template-columns: 1fr; 
+
+            }
 
         }
 
