@@ -1030,22 +1030,17 @@
             }
         }
 
-        /* === RESTORED CHARACTER HOVER EFFECTS === */
+        /* === CHARACTER HOVER EFFECT (Subtle Glow) === */
 
-        /* Add transition to the wrapper for the lift effect */
-        .character-link-wrapper {
-            transition: transform 0.3s ease;
-        }
-
-        /* Lift the character slightly on hover */
-        .character-link-wrapper:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Apply the Green Glow Drop Shadow to the image on hover */
-        .character-link-wrapper:hover .character-std {
-            filter: drop-shadow(0 0 25px rgba(155, 240, 11, 0.8));
+        /* Ensure smooth transition for the glow */
+        .character-link-wrapper .character-std {
             transition: filter 0.3s ease;
+        }
+
+        /* Apply a softer Green Glow Drop Shadow on hover */
+        .character-link-wrapper:hover .character-std {
+            /* Reduced blur from 25px to 15px, reduced opacity from 0.8 to 0.6 */
+            filter: drop-shadow(0 0 15px rgba(155, 240, 11, 0.6));
         }
 
     </style>
