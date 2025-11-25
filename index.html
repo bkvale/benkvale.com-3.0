@@ -142,7 +142,7 @@
 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 5px rgba(155, 240, 11, 0.1);
 
-            min-height: 350px;
+            min-height: 450px;
 
         }
 
@@ -242,11 +242,11 @@
 
             position: absolute;
 
-            right: 0px;
+            right: -50px;
 
             bottom: -5px;
 
-            width: 400px;
+            width: 450px;
 
             height: auto;
 
@@ -860,9 +860,13 @@
 
                 position: static;
 
-                margin-top: 30px;
+                margin-top: 20px;
 
-                max-width: 300px;
+                max-width: 250px;
+
+                max-height: 250px;
+
+                object-fit: contain;
 
                 width: 100%;
 
@@ -956,13 +960,13 @@
 
                 <span class="icon">&#9733;</span>
 
-                <h3>ACTIVE QUESTS</h3>
+                <h3>CURRENT QUEST</h3>
 
             </div>
 
-            <div class="quest-grid">
+            
 
-                
+            <div class="active-quest-wrapper">
 
                 <div class="quest-card">
 
@@ -970,13 +974,13 @@
 
                         <h4>Trace3: Associate Marketing Manager</h4>
 
-                        <span class="quest-status complete">Complete</span>
+                        <span class="quest-status in-progress">Active</span>
 
                     </div>
 
                     <p class="quest-description">
 
-                        MarTech Lead and **AI Center of Excellence** representative, driving HubSpot & ERP integrations and data strategies.
+                        **MarTech Lead** and **AI Center of Excellence** representative, driving HubSpot & ERP integrations and data strategies.
 
                     </p>
 
@@ -986,7 +990,7 @@
 
                             <li><span class="objective-icon complete">&#10003;</span> Led HubSpot & **NetSuite** ERP API integration.</li>
 
-                            <li><span class="objective-icon complete">&#10003;</span> **CRM** data de-duplication strategy implementation.</li>
+                            <li><span class="objective-icon complete">&#10003;**CRM** data de-duplication strategy implementation.</li>
 
                             <li><span class="objective-icon complete">&#10003;</span> Advised on **AI-driven strategies** and automation.</li>
 
@@ -996,19 +1000,35 @@
 
                     </div>
 
-                    <div class="progress-bar-container"><div class="progress-bar" style="width: 100%;"></div></div>
+                    <div class="progress-bar-container"><div class="progress-bar" style="width: 85%;"></div></div>
 
                     <div class="xp-info">
 
-                        <span>XP Earned:</span>
+                        <span>Current Progress:</span>
 
-                        <span class="xp-value">2000 / 2000 XP</span>
+                        <span class="xp-value">1700 / 2000 XP</span>
 
                     </div>
 
                 </div>
 
+            </div>
 
+
+
+            <div class="section-header" style="margin-top: 40px;">
+
+                <span class="icon">&#10003;</span>
+
+                <h3>COMPLETED QUESTS</h3>
+
+            </div>
+
+
+
+            <div class="quest-grid">
+
+                
 
                 <div class="quest-card">
 
@@ -1096,7 +1116,7 @@
 
                 </div>
 
-                 
+                
 
                 <div class="quest-card">
 
@@ -1122,7 +1142,7 @@
 
                             <li><span class="objective-icon complete">&#10003;</span> Relaunched company email marketing platform/strategy.</li>
 
-                            <li><span class="objective-icon complete">&#10003;</span> **CRM** database organization (~50,000 records).</li>
+                            <li><span class="objective-icon complete">&#10003;**CRM** database organization (~50,000 records).</li>
 
                         </ul>
 
@@ -1152,9 +1172,9 @@
 
                     <h5>Total XP</h5>
 
-                    <div class="value">5,600</div>
+                    <div class="value">15,000+</div>
 
-                    <div class="sub-text">Total Experience Points</div>
+                    <div class="sub-text">Total Experience Hours</div>
 
                 </div>
 
@@ -1164,7 +1184,7 @@
 
                     <h5>Active Quests</h5>
 
-                    <div class="value">0</div>
+                    <div class="value">1</div>
 
                     <div class="sub-text">Currently Engaged</div>
 
@@ -1176,9 +1196,9 @@
 
                     <h5>Completion Rate</h5>
 
-                    <div class="value">100%</div>
+                    <div class="value">75%</div>
 
-                    <div class="sub-text">All Primary Objectives Achieved</div>
+                    <div class="sub-text">Primary Objectives Achieved</div>
 
                 </div>
 
