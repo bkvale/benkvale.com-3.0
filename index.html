@@ -244,38 +244,6 @@
 
 
 
-        .character-model {
-
-            position: relative;
-
-            width: 35vw;
-
-            max-width: 450px;
-
-            min-width: 250px;
-
-            height: auto;
-
-            object-fit: contain;
-
-            z-index: 1;
-
-            opacity: 0.8;
-
-            filter: grayscale(10%) brightness(0.9) drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
-
-            transition: opacity 0.3s ease, filter 0.3s ease;
-
-            flex: 0 0 auto;
-
-            margin-left: 20px;
-
-            display: block;
-
-        }
-
-
-
         /* Character model link styling */
 
         .hero-section a[href*="linkedin"] {
@@ -283,16 +251,6 @@
             text-decoration: none;
 
             display: inline-block;
-
-        }
-
-
-
-        .character-model:hover {
-
-            opacity: 1;
-
-            filter: grayscale(0%) brightness(1) drop-shadow(0 0 25px rgba(155, 240, 11, 0.8));
 
         }
 
@@ -475,8 +433,8 @@
             border: 1px solid #d48aff;
         }
 
-        /* HEROIC: Plasma Blue */
-        .quest-status.heroic {
+        /* RARE: Plasma Blue */
+        .quest-status.rare {
             background: linear-gradient(135deg, #00c6ff, #0072ff);
             color: #fff;
             box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
@@ -970,7 +928,7 @@
 
             }
 
-            .character-model {
+            .character-link-wrapper {
 
                 margin: 30px auto 0 auto;
 
@@ -1026,6 +984,66 @@
 
         }
 
+        /* === NEW CHARACTER MODEL HOVER EFFECT === */
+
+        /* Wrapper handles positioning and stacking context */
+        .character-link-wrapper {
+            position: relative;
+            display: block;
+            /* Inherit dimensions from original design */
+            width: 35vw;
+            max-width: 450px;
+            min-width: 250px;
+            margin-left: 20px;
+            flex: 0 0 auto;
+        }
+
+        /* Ensure both images scale correctly and fade smoothly */
+        .character-link-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Standard image sits at the bottom layer */
+        .character-std {
+            position: relative;
+            z-index: 1;
+            /* Optional: Add back the original filter if desired */
+            /* filter: grayscale(10%) brightness(0.9) drop-shadow(0 0 15px rgba(0, 255, 0, 0.4)); */
+        }
+
+        /* Wireframe image sits on top and is hidden by default */
+        .character-wireframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            opacity: 0;
+            /* Optional: Add a glow to the wireframe */
+            /* filter: drop-shadow(0 0 15px rgba(155, 240, 11, 0.8)); */
+        }
+
+        /* On hover, fade in the wireframe image */
+        .character-link-wrapper:hover .character-wireframe {
+            opacity: 1;
+        }
+
+        /* === SKILL TREE LAYOUT FIX (Desktop) === */
+
+        /* On large screens, force a 4-column grid and define double-wide items */
+        @media (min-width: 1024px) {
+            #skills .quest-grid {
+                grid-template-columns: repeat(4, 1fr); /* Force exactly 4 columns */
+            }
+
+            /* Class to make a card span two columns */
+            .quest-card.double-wide {
+                grid-column: span 2;
+            }
+        }
+
     </style>
 
 </head>
@@ -1076,8 +1094,9 @@
 
             
 
-            <a href="https://www.linkedin.com/in/benkvale/" target="_blank" rel="noopener noreferrer">
-                <img src="/images/character-model.png" alt="Character Model - Ben Kvale" class="character-model">
+            <a href="https://www.linkedin.com/in/benkvale/" target="_blank" rel="noopener noreferrer" class="character-link-wrapper">
+                <img src="/images/character-model.png" alt="Character Model - Ben Kvale" class="character-std">
+                <img src="/images/character-model-grid.png" alt="Character Wireframe" class="character-wireframe">
             </a>
 
         </section>
@@ -1454,7 +1473,7 @@
 
                         <h4>CONTENT, CREATIVE & ENABLEMENT</h4>
 
-                        <span class="quest-status heroic">HEROIC</span>
+                        <span class="quest-status rare">RARE</span>
 
                     </div>
 
@@ -1478,7 +1497,7 @@
 
 
 
-                <div class="quest-card card-certs">
+                <div class="quest-card card-certs double-wide">
 
                     <div class="quest-header">
 
@@ -1518,7 +1537,7 @@
 
 
 
-                <div class="quest-card card-education">
+                <div class="quest-card card-education double-wide">
 
                     <div class="quest-header">
 
