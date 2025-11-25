@@ -452,13 +452,48 @@
 
         .quest-status.pending { background-color: #4CAF50; }
 
-        .quest-status.legendary { background-color: #9d4edd; color: #fff; }
+        /* =========================================
+           UPDATED RARITY STYLES (Glow Effects)
+           ========================================= */
 
-        .quest-status.epic { background-color: #7209b7; color: #fff; }
+        /* LEGENDARY: Glowing Gold/Titanium */
+        .quest-status.legendary {
+            background: linear-gradient(135deg, #FFD700 0%, #FDB931 50%, #d4af37 100%);
+            color: #000; /* Black text for contrast on gold */
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), inset 0 0 10px rgba(255, 255, 255, 0.5);
+            border: 1px solid #fff;
+            font-weight: 800;
+            text-shadow: none;
+            animation: pulseGold 2s infinite alternate;
+        }
 
-        .quest-status.heroic { background-color: #4361ee; color: #fff; }
+        /* EPIC: Deep Void Purple */
+        .quest-status.epic {
+            background: linear-gradient(135deg, #b026ff, #4b0082);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(176, 38, 255, 0.6);
+            border: 1px solid #d48aff;
+        }
 
-        .quest-status.unlocked { background-color: #06a77d; color: #fff; }
+        /* HEROIC: Plasma Blue */
+        .quest-status.heroic {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+        }
+
+        /* UNLOCKED: Digital Green */
+        .quest-status.unlocked {
+            background-color: #06a77d;
+            color: #fff;
+            box-shadow: 0 0 5px rgba(6, 167, 125, 0.3);
+        }
+
+        /* Animation for Legendary Glow */
+        @keyframes pulseGold {
+            0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+            100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 5px #fff; }
+        }
 
 
 
@@ -965,6 +1000,20 @@
 
             .quest-grid, .summary-stats { grid-template-columns: 1fr; }
 
+            /* --- Responsive Reset (Mobile) --- */
+            #skills .quest-grid {
+                grid-template-columns: 1fr; /* Stack everything on mobile */
+            }
+            .quest-card.card-content,
+            .quest-card.card-education,
+            .quest-card.card-certs {
+                grid-column: auto;
+                grid-row: auto;
+            }
+            .quest-card.card-certs .quest-objectives ul {
+                grid-template-columns: 1fr; /* Back to 1 column list */
+            }
+
             /* Responsive adjustments for the form */
 
             .contact-form { 
@@ -1011,7 +1060,7 @@
 
                 <h1>BEN KVALE</h1>
 
-                <h2>Marketer * Builder * Creative</h2>
+                <h2>Marketer : Builder : Creative</h2>
 
                 <p>A hybrid marketer-builder focused on designing scalable demand generation engines, strengthening marketing operations, and applying modern AI workflows across the entire GTM motion. I specialize in full-funnel demand gen, HubSpot ownership, data integrations, and AI-powered content and workflow automation — all aimed at driving measurable, revenue-aligned impact.</p>
 
@@ -1307,6 +1356,8 @@
 
             <div class="quest-grid">
 
+                
+
                 <div class="quest-card">
 
                     <div class="quest-header">
@@ -1334,6 +1385,8 @@
                     </div>
 
                 </div>
+
+
 
                 <div class="quest-card">
 
@@ -1363,6 +1416,8 @@
 
                 </div>
 
+
+
                 <div class="quest-card">
 
                     <div class="quest-header">
@@ -1391,7 +1446,9 @@
 
                 </div>
 
-                <div class="quest-card">
+
+
+                <div class="quest-card card-content">
 
                     <div class="quest-header">
 
@@ -1419,7 +1476,9 @@
 
                 </div>
 
-                <div class="quest-card">
+
+
+                <div class="quest-card card-certs">
 
                     <div class="quest-header">
 
@@ -1457,7 +1516,9 @@
 
                 </div>
 
-                <div class="quest-card">
+
+
+                <div class="quest-card card-education">
 
                     <div class="quest-header">
 
@@ -1484,6 +1545,8 @@
                     </div>
 
                 </div>
+
+
 
             </div>
 
