@@ -932,11 +932,25 @@
 
             }
 
+            /* Target the existing wrapper class for centering */
             .character-link-wrapper {
 
-                margin: 30px auto 0 auto;
+                margin: 30px auto 0 auto; /* Top 30px, Auto Left/Right centers it, Bottom 0 */
 
-                width: 60%;
+                width: 60%; 
+
+                max-width: none; 
+
+                display: block; /* Ensures auto margins work correctly */
+
+            }
+
+            /* Ensure the image inside fills the wrapper */
+            .character-std {
+
+                width: 100%;
+
+                height: auto;
 
             }
 
