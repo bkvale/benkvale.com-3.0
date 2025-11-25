@@ -1030,6 +1030,24 @@
             }
         }
 
+        /* === RESTORED CHARACTER HOVER EFFECTS === */
+
+        /* Add transition to the wrapper for the lift effect */
+        .character-link-wrapper {
+            transition: transform 0.3s ease;
+        }
+
+        /* Lift the character slightly on hover */
+        .character-link-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Apply the Green Glow Drop Shadow to the image on hover */
+        .character-link-wrapper:hover .character-std {
+            filter: drop-shadow(0 0 25px rgba(155, 240, 11, 0.8));
+            transition: filter 0.3s ease;
+        }
+
     </style>
 
 </head>
@@ -1146,7 +1164,7 @@
 
                         <span>Current Progress:</span>
 
-                        <span class="xp-value">1700 / 2000 XP</span>
+                        <span class="xp-value">1700 / 2000 XP Hours</span>
 
                     </div>
 
